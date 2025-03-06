@@ -10,10 +10,23 @@ const PORT = process.env.PORT || 3000;
 const token = '8139148778:AAFNzYSpfqcA7dtekXu1VyOKOVkT6ccQSK4';
 const channelId = "@test_bot_channel_leo";
 
+// const corsOptions = {
+//     origin: '*', // Replace with your frontend URL
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     credentials: true,
+// };
+
 const corsOptions = {
-    origin: '*', // Replace with your frontend URL
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
+    origin: '*',
+  
+    methods: [
+      'GET',
+      'POST',
+    ],
+  
+    allowedHeaders: [
+      'Content-Type',
+    ],
 };
 
 
