@@ -10,23 +10,10 @@ const PORT = process.env.PORT || 3000;
 const token = '8139148778:AAFNzYSpfqcA7dtekXu1VyOKOVkT6ccQSK4';
 const channelId = "@test_bot_channel_leo";
 
-// const corsOptions = {
-//     origin: '*', // Replace with your frontend URL
-//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//     credentials: true,
-// };
-
 const corsOptions = {
-    origin: '*',
-  
-    methods: [
-      'GET',
-      'POST',
-    ],
-  
-    allowedHeaders: [
-      'Content-Type',
-    ],
+    origin: '*', // Replace with your frontend URL
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
 };
 
 
@@ -37,6 +24,12 @@ var before = -1;
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    next();
+});
 
 app.options('*', cors(corsOptions));
 
