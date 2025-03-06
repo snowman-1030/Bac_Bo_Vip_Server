@@ -50,19 +50,7 @@ const getImg = (htmlString) => {
     }
 }
 
-const translateToFrench = async (text) => {
-    try {
-        const res = await translate(text, { from: 'pt', to: 'fr' });
-        console.log(`Original (Portuguese): ${text}`);
-        console.log(`Translated (French): ${res.text}`);
-    } catch (error) {
-        console.error('Error during translation:', error);
-    }
-}
-
 app.post('/send-message', async (req, res) => {
-
-    // translateToFrench("Hi, How are you");
 
     const { message } = req.body; // Extract message from request body
 
@@ -125,6 +113,9 @@ app.post('/send-message', async (req, res) => {
 
     // console.log("++++++++++++++++++>", BotMessage);
     
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins or specify a domain
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Allowed methods
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); 
 
     if (!message) {
         return res.status(400).json({ error: 'Message is required' });
