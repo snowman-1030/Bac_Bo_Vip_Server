@@ -71,9 +71,9 @@ app.get('/', (req, res) => {
 
 app.post('/send-message', async (req, res) => {
 
-    res.status(200).json({ success: true, message: 'Yeah, server is ok' });
+    const { message } = req.body; // Extract message from request body
 
-    // const { message } = req.body; // Extract message from request body
+    res.status(200).json({ success: true, message });
 
     // let isHead = true;
     // let str = "";
