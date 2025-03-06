@@ -128,7 +128,7 @@ app.post('/send-message', async (req, res) => {
 
     // // console.log("=+++++++++++++++> ", BotMessage);
 
-    BotMessage = await translate("ENTRADA CONFIRMADA", { from: 'pt', to: 'fr' });
+    let BotMessage = await translate("ENTRADA CONFIRMADA", { from: 'pt', to: 'fr' });
 
     res.status(200).json({ success: true, BotMessage });
 
