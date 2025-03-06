@@ -15,7 +15,7 @@ const bot = new TelegramBot(token, { polling: true, request: { timeout: 20000 } 
 
 var before = -1;
 
-app.use(cors({ origin: '*' }));
+app.use(cors());
 app.use(express.json());
 
 const getImg = (htmlString) => {
@@ -51,6 +51,10 @@ const getImg = (htmlString) => {
 }
 
 app.post('/send-message', async (req, res) => {
+
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins or specify a domain
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Allowed methods
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); 
 
     // res.status(200).json({ success: true, message: 'Yeah, server is ok' });
 
@@ -114,10 +118,6 @@ app.post('/send-message', async (req, res) => {
     BotMessage = await translate(BotMessage, { from: 'pt', to: 'fr' });
 
     // console.log("++++++++++++++++++>", BotMessage);
-    
-    // res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins or specify a domain
-    // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Allowed methods
-    // res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); 
 
     if (!message) {
         return res.status(400).json({ error: 'Message is required' });
