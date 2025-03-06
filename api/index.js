@@ -3,16 +3,17 @@ const express = require('express');
 const cors = require('cors');
 const { JSDOM } = require('jsdom');
 const TelegramBot = require('node-telegram-bot-api');
-const translate = require('@vitalets/google-translate-api');
+const { translate } = require('free-translate');
+
 
 const PORT = process.env.PORT || 3000;
 const token = '8139148778:AAFNzYSpfqcA7dtekXu1VyOKOVkT6ccQSK4';
 const channelId = "@test_bot_channel_leo";
 
 const app = express();
-const bot = new TelegramBot(token, { polling: true, request: { timeout: 20000 } });
+// const bot = new TelegramBot(token, { polling: true, request: { timeout: 20000 } });
 
-var len = 0;
+var before = -1;
 
 app.use(cors());
 app.use(express.json());
@@ -59,7 +60,7 @@ const translateToFrench = async (text) => {
     }
 }
 
-app.post('/send-message', (req, res) => {
+app.post('/send-message', async (req, res) => {
 
     // translateToFrench("Hi, How are you");
 
@@ -69,14 +70,17 @@ app.post('/send-message', (req, res) => {
     let str = "";
     let BotMessage = "";
 
-    if(len == message.length){
+    let len = message.length;
+
+    if((before == 0 && len <= 1300) || (before == 1 && len > 1300)){
         
         res.status(200).json({ success: true, message: 'Already sent!' });
 
         return;
     }  
 
-    len = message.length;
+    if(len > 1300) before = 1;
+    if(len <= 1300) before = 0;
 
     for (let i = 0; i < len; i++) {
         if (message[i] == ">" && isHead == true) {
@@ -104,8 +108,6 @@ app.post('/send-message', (req, res) => {
 
         if (message[i] == "<") {
 
-            // if(str != " ") str = translateToFrench(str)
-            
             BotMessage = `${BotMessage}${str}`;
             str = "";
 
@@ -118,6 +120,10 @@ app.post('/send-message', (req, res) => {
     }
 
     // console.log("=+++++++++++++++> ", BotMessage);
+
+    BotMessage = await translate(BotMessage, { from: 'pt', to: 'fr' });
+
+    // console.log("++++++++++++++++++>", BotMessage);
     
 
     if (!message) {
