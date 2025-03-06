@@ -15,7 +15,9 @@ const bot = new TelegramBot(token, { polling: true, request: { timeout: 20000 } 
 
 var before = -1;
 
-app.use(cors());
+app.use(cors({
+    origin: 'https://web.telegram.org' // Allow requests from this origin
+}));
 app.use(express.json());
 
 const getImg = (htmlString) => {
