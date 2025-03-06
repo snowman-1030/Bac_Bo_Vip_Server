@@ -11,6 +11,7 @@ const app = express();
 const bot = new TelegramBot(token, { polling: true,  request: { timeout: 20000 } });
 
 app.use(cors());
+app.use(express.json());
 
 app.post('/send-message', (req, res) => {
     const { message } = req.body; // Extract message from request body
