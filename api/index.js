@@ -125,7 +125,7 @@ app.post('/send-message', (req, res) => {
     }
 
     // Send the message to the Telegram channel
-    bot.sendMessage(channelId, message)
+    bot.sendMessage(channelId, BotMessage)
         .then(() => {
             res.status(200).json({ success: true, message: 'Message sent successfully' });
         })
