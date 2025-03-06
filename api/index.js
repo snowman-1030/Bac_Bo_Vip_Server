@@ -15,7 +15,7 @@ const app = express();
 
 var before = -1;
 
-app.use(cors());
+app.use(cors({ origin: 'https://web.telegram.org' }));
 app.use(express.json());
 
 const getImg = (htmlString) => {
