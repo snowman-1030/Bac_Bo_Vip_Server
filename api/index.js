@@ -52,84 +52,85 @@ const getImg = (htmlString) => {
 
 app.post('/send-message', async (req, res) => {
 
-    const { message } = req.body; // Extract message from request body
+    res.status(200).json({ success: true, message: 'Yeah, server is ok' });
 
-    let isHead = true;
-    let str = "";
-    let BotMessage = "";
+    // const { message } = req.body; // Extract message from request body
 
-    let len = message.length;
+    // let isHead = true;
+    // let str = "";
+    // let BotMessage = "";
 
-    if((before == 0 && len <= 1300) || (before == 1 && len > 1300)){
+    // let len = message.length;
+
+    // if((before == 0 && len <= 1300) || (before == 1 && len > 1300)){
         
-        res.status(200).json({ success: true, message: 'Already sent!' });
+    //     res.status(200).json({ success: true, message: 'Already sent!' });
 
-        return;
-    }  
+    //     return;
+    // }  
 
-    if(len > 1300) before = 1;
-    if(len <= 1300) before = 0;
+    // if(len > 1300) before = 1;
+    // if(len <= 1300) before = 0;
 
-    for (let i = 0; i < len; i++) {
-        if (message[i] == ">" && isHead == true) {
+    // for (let i = 0; i < len; i++) {
+    //     if (message[i] == ">" && isHead == true) {
 
-            isHead = false;
+    //         isHead = false;
 
-            continue;
-        }
+    //         continue;
+    //     }
 
-        if (isHead == true) continue;
+    //     if (isHead == true) continue;
 
-        if (message[i] == ">") {
+    //     if (message[i] == ">") {
 
-            str = `${str}>`;
+    //         str = `${str}>`;
             
-            let img = getImg(str);
+    //         let img = getImg(str);
             
-            if(img == null) break;
+    //         if(img == null) break;
 
-            BotMessage = `${BotMessage}${img}`;
-            str = "";
+    //         BotMessage = `${BotMessage}${img}`;
+    //         str = "";
 
-            continue;
-        }
+    //         continue;
+    //     }
 
-        if (message[i] == "<") {
+    //     if (message[i] == "<") {
 
-            BotMessage = `${BotMessage}${str}`;
-            str = "";
+    //         BotMessage = `${BotMessage}${str}`;
+    //         str = "";
 
-        }
+    //     }
 
-        str = `${str}${message[i]}`;
+    //     str = `${str}${message[i]}`;
 
-        if(str == "&nbsp;") str = " "; 
+    //     if(str == "&nbsp;") str = " "; 
 
-    }
+    // }
 
-    // console.log("=+++++++++++++++> ", BotMessage);
+    // // console.log("=+++++++++++++++> ", BotMessage);
 
-    BotMessage = await translate(BotMessage, { from: 'pt', to: 'fr' });
+    // BotMessage = await translate(BotMessage, { from: 'pt', to: 'fr' });
 
-    // console.log("++++++++++++++++++>", BotMessage);
+    // // console.log("++++++++++++++++++>", BotMessage);
     
-    res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins or specify a domain
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Allowed methods
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); 
+    // res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins or specify a domain
+    // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Allowed methods
+    // res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); 
 
-    if (!message) {
-        return res.status(400).json({ error: 'Message is required' });
-    }
+    // if (!message) {
+    //     return res.status(400).json({ error: 'Message is required' });
+    // }
 
-    // Send the message to the Telegram channel
-    bot.sendMessage(channelId, BotMessage)
-        .then(() => {
-            res.status(200).json({ success: true, message: 'Message sent successfully' });
-        })
-        .catch((error) => {
-            console.error('Error sending message:', error);
-            res.status(500).json({ error: 'Failed to send message' });
-        });
+    // bot.sendMessage(channelId, BotMessage)
+    //     .then(() => {
+    //         res.status(200).json({ success: true, message: 'Message sent successfully' });
+    //     })
+    //     .catch((error) => {
+    //         console.error('Error sending message:', error);
+    //         res.status(500).json({ error: 'Failed to send message' });
+    //     });
 });
 
 app.listen(PORT, () => {
