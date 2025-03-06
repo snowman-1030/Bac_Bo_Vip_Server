@@ -71,64 +71,64 @@ app.get('/', (req, res) => {
 
 app.post('/send-message', async (req, res) => {
 
-    const { message } = req.body; // Extract message from request body
+    // const { message } = req.body; // Extract message from request body
 
-    let isHead = true;
-    let str = "";
-    let BotMessage = "";
+    // let isHead = true;
+    // let str = "";
+    // let BotMessage = "";
 
-    let len = message.length;
+    // let len = message.length;
 
-    if((before == 0 && len <= 1300) || (before == 1 && len > 1300)){
+    // if((before == 0 && len <= 1300) || (before == 1 && len > 1300)){
         
-        res.status(200).json({ success: true, message: 'Already sent!' });
+    //     res.status(200).json({ success: true, message: 'Already sent!' });
 
-        return;
-    }  
+    //     return;
+    // }  
 
-    if(len > 1300) before = 1;
-    if(len <= 1300) before = 0;
+    // if(len > 1300) before = 1;
+    // if(len <= 1300) before = 0;
 
-    for (let i = 0; i < len; i++) {
-        if (message[i] == ">" && isHead == true) {
+    // for (let i = 0; i < len; i++) {
+    //     if (message[i] == ">" && isHead == true) {
 
-            isHead = false;
+    //         isHead = false;
 
-            continue;
-        }
+    //         continue;
+    //     }
 
-        if (isHead == true) continue;
+    //     if (isHead == true) continue;
 
-        if (message[i] == ">") {
+    //     if (message[i] == ">") {
 
-            str = `${str}>`;
+    //         str = `${str}>`;
             
-            let img = getImg(str);
+    //         let img = getImg(str);
             
-            if(img == null) break;
+    //         if(img == null) break;
 
-            BotMessage = `${BotMessage}${img}`;
-            str = "";
+    //         BotMessage = `${BotMessage}${img}`;
+    //         str = "";
 
-            continue;
-        }
+    //         continue;
+    //     }
 
-        if (message[i] == "<") {
+    //     if (message[i] == "<") {
 
-            BotMessage = `${BotMessage}${str}`;
-            str = "";
+    //         BotMessage = `${BotMessage}${str}`;
+    //         str = "";
 
-        }
+    //     }
 
-        str = `${str}${message[i]}`;
+    //     str = `${str}${message[i]}`;
 
-        if(str == "&nbsp;") str = " "; 
+    //     if(str == "&nbsp;") str = " "; 
 
-    }
+    // }
 
     // // console.log("=+++++++++++++++> ", BotMessage);
 
-    BotMessage = await translate(BotMessage, { from: 'pt', to: 'fr' });
+    BotMessage = await translate("ENTRADA CONFIRMADA", { from: 'pt', to: 'fr' });
 
     res.status(200).json({ success: true, BotMessage });
 
