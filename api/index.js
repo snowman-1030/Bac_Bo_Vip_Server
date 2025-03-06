@@ -126,10 +126,11 @@ app.post('/send-message', async (req, res) => {
 
     }
 
-    res.status(200).json({ success: true, BotMessage });
     // // console.log("=+++++++++++++++> ", BotMessage);
 
-    // BotMessage = await translate(BotMessage, { from: 'pt', to: 'fr' });
+    BotMessage = await translate(BotMessage, { from: 'pt', to: 'fr' });
+
+    res.status(200).json({ success: true, BotMessage });
 
     // // console.log("++++++++++++++++++>", BotMessage);
 
