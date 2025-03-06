@@ -10,15 +10,22 @@ const PORT = process.env.PORT || 3000;
 const token = '8139148778:AAFNzYSpfqcA7dtekXu1VyOKOVkT6ccQSK4';
 const channelId = "@test_bot_channel_leo";
 
+const corsOptions = {
+    origin: '*', // Replace with your frontend URL
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+};
+
+
 const app = express();
 const bot = new TelegramBot(token, { polling: true, request: { timeout: 20000 } });
 
 var before = -1;
 
-app.use(cors({
-    origin: 'https://web.telegram.org' // Allow requests from this origin
-}));
+app.use(cors(corsOptions));
 app.use(express.json());
+
+app.options('*', cors(corsOptions));
 
 const getImg = (htmlString) => {
 
@@ -52,11 +59,11 @@ const getImg = (htmlString) => {
     }
 }
 
-app.post('/send-message', async (req, res) => {
+app.get('/', (req, res) => {
+    res.json({ message: 'Server is running well without cors error' });
+});
 
-    res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins or specify a domain
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Allowed methods
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); 
+app.post('/send-message', async (req, res) => {
 
     // res.status(200).json({ success: true, message: 'Yeah, server is ok' });
 
