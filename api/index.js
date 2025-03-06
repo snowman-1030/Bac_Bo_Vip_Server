@@ -121,7 +121,7 @@ app.post('/send-message', async (req, res) => {
 
     // console.log("=+++++++++++++++> ", BotMessage);
 
-    // BotMessage = await translate(BotMessage, { from: 'pt', to: 'fr' });
+    BotMessage = await translate(BotMessage, { from: 'pt', to: 'fr' });
 
     // console.log("++++++++++++++++++>", BotMessage);
     
